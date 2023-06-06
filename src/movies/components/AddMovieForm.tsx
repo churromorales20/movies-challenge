@@ -81,7 +81,7 @@ export function AddMovieForm({ onSubmit, onCancel }: AddMovieFormProps) {
         setter={(value) => handleInputChange('imageUrl', value)}
       />
       <InputField
-        name="title"
+        name="Title"
         value={formData.title}
         setter={(value) => handleInputChange('title', value)}
       />
