@@ -35,8 +35,8 @@ export function AddMovieForm({ onSubmit, onCancel }: AddMovieFormProps) {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    
     // Check if all required fields are filled
     if (
       formData.title &&
@@ -76,7 +76,7 @@ export function AddMovieForm({ onSubmit, onCancel }: AddMovieFormProps) {
   return (
     <form className="p-4" onSubmit={handleSubmit}>
       <InputField
-        name="imageUrl"
+        name="Url"
         value={formData.imageUrl}
         setter={(value) => handleInputChange('imageUrl', value)}
       />
@@ -86,32 +86,32 @@ export function AddMovieForm({ onSubmit, onCancel }: AddMovieFormProps) {
         setter={(value) => handleInputChange('title', value)}
       />
       <InputField
-        name="duration"
+        name="Duration"
         value={formData.duration.toString()}
         setter={(value) => handleInputChange('duration', value)}
       />
       <InputField
-        name="year"
+        name="Year"
         value={formData.year.toString()}
         setter={(value) => handleInputChange('year', value)}
       />
       <InputField
-        name="director"
+        name="Director"
         value={formData.director}
         setter={(value) => handleInputChange('director', value)}
       />
       <InputField
-        name="starring"
+        name="Starring"
         value={formData.starring.join(',')}
         setter={(value) => handleInputChange('starring', value.split(','))}
       />
       <InputField
-        name="description"
+        name="Description"
         value={formData.description}
         setter={(value) => handleInputChange('description', value)}
       />
       <div className="text-center">
-        <Button>Submit</Button>
+        <Button onClick={() => handleSubmit()}>Submit</Button>
         <Button onClick={handleCancel}>Cancel</Button>
       </div>
     </form>

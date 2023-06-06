@@ -26,9 +26,11 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         </p>
         <h6 className="card-duration mb-2">{movie.duration} min</h6>
         <h6 className={`card-director mb-2 ${movie.id}`}>
-          {movie.director.join(', ')}
+          {Array.isArray(movie.director) ? movie.director.join(', ') : ''}
         </h6>
-        <h6 className="card-starring mb-2">{movie.starring.join(', ')}</h6>
+        <h6 className="card-starring mb-2">
+          {Array.isArray(movie.starring) ? movie.starring.join(', ') : ''}
+        </h6>
         <Button onClick={handleDelete}>Delete</Button>
       </div>
       <div className="card-footer">

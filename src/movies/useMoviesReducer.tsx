@@ -17,6 +17,9 @@ export function useMoviesReducer(): [MoviesState, React.Dispatch<MoviesAction>] 
 
       case 'ADD':
         const { movie } = action.payload;
+        console.log('movie');
+        console.log(action.payload);
+        
         const newMovie: Movie = {
           id: uuid(),
           ...movie,
