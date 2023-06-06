@@ -5,50 +5,52 @@ import { Movie } from 'types';
 import { useMovies } from './MovieProvider';
 
 interface MovieCardProps {
-    movie: Movie,
+  movie: Movie;
 }
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
-    const { moviesDispatch } = useMovies();
+  const { moviesDispatch } = useMovies();
 
-    // TODO: implement required functionality
+  const handleDelete = () => {
+    // TODO: Implement delete functionality
+    moviesDispatch({ type: 'DELETE', payload: movie.id });
+  };
 
-    return (
-        <div data-testid={`movie-item-${movie.id}`}>
-            {/* TODO: Display image */}
-            <img className="card-img-top" alt="" />
-            <div className="card-body">
-                <h4 className="card-title">
-                    {/* TODO: Display title */}
-                </h4>
-                <h6 className="card-year mb-2 text-muted">
-                    {/* TODO: Display year */}
-                </h6>
-                <p className="text-justify" style={{ fontSize: '14px' }}>
-                    {/* TODO: Display description */}
-                </p>
-                <h6 className="card-duration mb-2">
-                    {/* TODO: Display duration */}
-                </h6>
-                <h6 className={`card-director mb-2 ${movie.id}`}>
-                    {/* TODO: Display directors */}
-                </h6>
-                <h6 className="card-starring mb-2">
-                    {/* TODO: Display starring actors */}
-                </h6>
-                {/* TODO: Implement delete functionality */}
-                <Button>Delete</Button>
-            </div>
-            <div className="card-footer">
-                <div className="clearfix">
-                <div className="float-left mt-1">
-                    {/* TODO: Display stars */}
-                </div>
-                <div data-testid="movie-rating" className="card-footer-badge float-right badge badge-primary badge-pill">
-                    {/* TODO: Display rating value */}
-                </div>
-                </div>
-            </div>
-        </div>    
-    )
+  return (
+    <div data-testid={`movie-item-${movie.id}`}>
+      <img className="card-img-top" src={movie.imageUrl} alt={movie.title} />
+      <div className="card-body">
+        <h4 className="card-title">{movie.title}</h4>
+        <h6 className="card-year mb-2 text-muted">{movie.year}</h6>
+        <p className="text-justify" style={{ fontSize: '14px' }}>
+          {movie.description}
+        </p>
+        <h6 className="card-duration mb-2">{movie.duration} min</h6>
+        <h6 className={`card-director mb-2 ${movie.id}`}>
+          {movie.director.join(', ')}
+        </h6>
+        <h6 className="card-starring mb-2">{movie.starring.join(', ')}</h6>
+        <Button onClick={handleDelete}>Delete</Button>
+      </div>
+      <div className="card-footer">
+        <div className="clearfix">
+          <div className="float-left mt-1">
+            <StarRating
+              rating={getAvgRating(movie.ratings)}
+              onChange={(rating) => {
+                // TODO: Implement rating functionality
+                moviesDispatch({ type: 'RATE', payload: { id: movie.id, rating } });
+              }}
+            />
+          </div>
+          <div
+            data-testid="movie-rating"
+            className="card-footer-badge float-right badge badge-primary badge-pill"
+          >
+            {getAvgRating(movie.ratings)}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
