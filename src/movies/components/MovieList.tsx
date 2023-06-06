@@ -17,7 +17,7 @@ export const MovieList = () => {
     setDisplayOptionType('FORM');
   };
 
-  const handleAddMovieFormSubmit = (movieDetails) => {
+  const handleAddMovieFormSubmit = (movieDetails: any) => {
     moviesDispatch({ type: 'ADD', payload: movieDetails });
     setDisplayOptionType('BUTTON');
   };

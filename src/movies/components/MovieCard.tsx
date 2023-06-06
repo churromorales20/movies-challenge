@@ -12,8 +12,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
   const { moviesDispatch } = useMovies();
 
   const handleDelete = () => {
-    // TODO: Implement delete functionality
-    moviesDispatch({ type: 'DELETE', payload: movie.id });
+    moviesDispatch({ type: 'DELETE', payload: { movieId: movie.id } });
   };
 
   return (
@@ -36,10 +35,10 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
         <div className="clearfix">
           <div className="float-left mt-1">
             <StarRating
-              rating={getAvgRating(movie.ratings)}
-              onChange={(rating) => {
+              rating={getAvgRating(movie)}
+              onRate={(rating) => {
                 // TODO: Implement rating functionality
-                moviesDispatch({ type: 'RATE', payload: { id: movie.id, rating } });
+                moviesDispatch({ type: 'RATE', payload: { movieId: movie.id, rating } });
               }}
             />
           </div>
@@ -47,7 +46,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
             data-testid="movie-rating"
             className="card-footer-badge float-right badge badge-primary badge-pill"
           >
-            {getAvgRating(movie.ratings)}
+            {getAvgRating(movie)}
           </div>
         </div>
       </div>

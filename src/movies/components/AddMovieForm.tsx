@@ -78,40 +78,40 @@ export function AddMovieForm({ onSubmit, onCancel }: AddMovieFormProps) {
       <InputField
         name="imageUrl"
         value={formData.imageUrl}
-        onChange={(value) => handleInputChange('imageUrl', value)}
+        setter={(value) => handleInputChange('imageUrl', value)}
       />
       <InputField
         name="title"
         value={formData.title}
-        onChange={(value) => handleInputChange('title', value)}
+        setter={(value) => handleInputChange('title', value)}
       />
       <InputField
         name="duration"
         value={formData.duration.toString()}
-        onChange={(value) => handleInputChange('duration', parseInt(value))}
+        setter={(value) => handleInputChange('duration', value)}
       />
       <InputField
         name="year"
         value={formData.year.toString()}
-        onChange={(value) => handleInputChange('year', parseInt(value))}
+        setter={(value) => handleInputChange('year', value)}
       />
       <InputField
         name="director"
         value={formData.director}
-        onChange={(value) => handleInputChange('director', value)}
+        setter={(value) => handleInputChange('director', value)}
       />
       <InputField
         name="starring"
-        value={formData.starring}
-        onChange={(value) => handleInputChange('starring', value.split(','))}
+        value={formData.starring.join(',')}
+        setter={(value) => handleInputChange('starring', value.split(','))}
       />
       <InputField
         name="description"
         value={formData.description}
-        onChange={(value) => handleInputChange('description', value)}
+        setter={(value) => handleInputChange('description', value)}
       />
       <div className="text-center">
-        <Button type="submit">Submit</Button>
+        <Button>Submit</Button>
         <Button onClick={handleCancel}>Cancel</Button>
       </div>
     </form>
