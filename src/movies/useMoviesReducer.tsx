@@ -5,29 +5,41 @@ import { Movie, MoviesAction } from 'types';
 import { getMovies } from 'api/movies';
 
 interface MoviesState {
-  movies: Movie[]
-  initialized: boolean
+  movies: Movie[];
+  initialized: boolean;
 }
 
 export function useMoviesReducer(): [MoviesState, React.Dispatch<MoviesAction>] {
-  // TODO: Implement all action processing
-
   const movieReducer = (state: MoviesState, action: MoviesAction): MoviesState => {
     switch (action.type) {
       case 'FETCH':
-        return { ...state };
+        return { ...state, movies: action.payload, initialized: true };
 
       case 'ADD':
-        return { ...state };
+        const newMovie: Movie = {
+          id: uuid(), // Generate a unique ID for the new movie
+          ...action.payload,
+        };
+        return { ...state, movies: [...state.movies, newMovie] };
 
       case 'DELETE':
-        return { ...state };
+        const updatedMovies = state.movies.filter(movie => movie.id !== action.payload);
+        return { ...state, movies: updatedMovies };
 
       case 'RATE':
-        return { ...state };
+        const { movieId, rating } = action.payload;
+        const updatedMoviesWithRating = state.movies.map(movie => {
+          if (movie.id === movieId) {
+            const updatedRatings = [...movie.ratings, rating];
+            const avgRating = calculateAverageRating(updatedRatings);
+            return { ...movie, ratings: updatedRatings, avgRating };
+          }
+          return movie;
+        });
+        return { ...state, movies: updatedMoviesWithRating };
 
       default:
-        return state
+        return state;
     }
   };
 
@@ -37,8 +49,25 @@ export function useMoviesReducer(): [MoviesState, React.Dispatch<MoviesAction>] 
   });
 
   useEffect(() => {
-    // TODO: Call fetch action
+    const fetchMovies = async () => {
+      try {
+        const movies = await getMovies();
+        dispatch({ type: 'FETCH', payload: movies });
+      } catch (error) {
+        console.error('Error fetching movies:', error);
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   return [state, dispatch];
+}
+
+function calculateAverageRating(ratings: number[]): number {
+  if (ratings.length === 0) {
+    return 0;
+  }
+  const sum = ratings.reduce((total, rating) => total + rating, 0);
+  return sum / ratings.length;
 }
